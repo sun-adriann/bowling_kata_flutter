@@ -34,18 +34,18 @@ class Game {
 
   int get score {
     int score = 0;
-    int frame = 0;
+    int roll = 0;
 
-    for (var i = 0; i < 10; i++) {
-      if (_isStrike(frame)) {
-        score += 10 + _strikeBonus(frame);
-        frame++;
-      } else if (_isSpare(frame)) {
-        score += 10 + _spareBonus(frame);
-        frame += 2;
+    for (var frame = 0; frame < 10; frame++) {
+      if (_isStrike(roll)) {
+        score += 10 + _strikeBonus(roll);
+        roll++;
+      } else if (_isSpare(roll)) {
+        score += 10 + _spareBonus(roll);
+        roll += 2;
       } else {
-        score += _sumOfRollsInFrame(frame);
-        frame += 2;
+        score += _sumOfRollsInFrame(roll);
+        roll += 2;
       }
     }
 
