@@ -293,8 +293,9 @@ abstract class _ResetGame implements GameEvent {
 mixin _$GameState {
   int get finalScore => throw _privateConstructorUsedError;
   List<int> get rolls => throw _privateConstructorUsedError;
-  int get currentFrameCount => throw _privateConstructorUsedError;
-  int get currentRollCount => throw _privateConstructorUsedError;
+  List<Frame> get frames => throw _privateConstructorUsedError;
+  int get currentFrameIndex => throw _privateConstructorUsedError;
+  int get currentRollIndex => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GameStateCopyWith<GameState> get copyWith =>
@@ -308,8 +309,9 @@ abstract class $GameStateCopyWith<$Res> {
   $Res call(
       {int finalScore,
       List<int> rolls,
-      int currentFrameCount,
-      int currentRollCount});
+      List<Frame> frames,
+      int currentFrameIndex,
+      int currentRollIndex});
 }
 
 /// @nodoc
@@ -324,8 +326,9 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
   $Res call({
     Object? finalScore = freezed,
     Object? rolls = freezed,
-    Object? currentFrameCount = freezed,
-    Object? currentRollCount = freezed,
+    Object? frames = freezed,
+    Object? currentFrameIndex = freezed,
+    Object? currentRollIndex = freezed,
   }) {
     return _then(_value.copyWith(
       finalScore: finalScore == freezed
@@ -336,13 +339,17 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
           ? _value.rolls
           : rolls // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      currentFrameCount: currentFrameCount == freezed
-          ? _value.currentFrameCount
-          : currentFrameCount // ignore: cast_nullable_to_non_nullable
+      frames: frames == freezed
+          ? _value.frames
+          : frames // ignore: cast_nullable_to_non_nullable
+              as List<Frame>,
+      currentFrameIndex: currentFrameIndex == freezed
+          ? _value.currentFrameIndex
+          : currentFrameIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      currentRollCount: currentRollCount == freezed
-          ? _value.currentRollCount
-          : currentRollCount // ignore: cast_nullable_to_non_nullable
+      currentRollIndex: currentRollIndex == freezed
+          ? _value.currentRollIndex
+          : currentRollIndex // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -357,8 +364,9 @@ abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
   $Res call(
       {int finalScore,
       List<int> rolls,
-      int currentFrameCount,
-      int currentRollCount});
+      List<Frame> frames,
+      int currentFrameIndex,
+      int currentRollIndex});
 }
 
 /// @nodoc
@@ -375,8 +383,9 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
   $Res call({
     Object? finalScore = freezed,
     Object? rolls = freezed,
-    Object? currentFrameCount = freezed,
-    Object? currentRollCount = freezed,
+    Object? frames = freezed,
+    Object? currentFrameIndex = freezed,
+    Object? currentRollIndex = freezed,
   }) {
     return _then(_$_GameState(
       finalScore: finalScore == freezed
@@ -387,13 +396,17 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
           ? _value._rolls
           : rolls // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      currentFrameCount: currentFrameCount == freezed
-          ? _value.currentFrameCount
-          : currentFrameCount // ignore: cast_nullable_to_non_nullable
+      frames: frames == freezed
+          ? _value._frames
+          : frames // ignore: cast_nullable_to_non_nullable
+              as List<Frame>,
+      currentFrameIndex: currentFrameIndex == freezed
+          ? _value.currentFrameIndex
+          : currentFrameIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      currentRollCount: currentRollCount == freezed
-          ? _value.currentRollCount
-          : currentRollCount // ignore: cast_nullable_to_non_nullable
+      currentRollIndex: currentRollIndex == freezed
+          ? _value.currentRollIndex
+          : currentRollIndex // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -405,9 +418,11 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
   const _$_GameState(
       {this.finalScore = 0,
       final List<int> rolls = const [],
-      this.currentFrameCount = 0,
-      this.currentRollCount = 0})
-      : _rolls = rolls;
+      required final List<Frame> frames,
+      this.currentFrameIndex = 0,
+      this.currentRollIndex = 0})
+      : _rolls = rolls,
+        _frames = frames;
 
   @override
   @JsonKey()
@@ -420,16 +435,23 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
     return EqualUnmodifiableListView(_rolls);
   }
 
+  final List<Frame> _frames;
+  @override
+  List<Frame> get frames {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_frames);
+  }
+
   @override
   @JsonKey()
-  final int currentFrameCount;
+  final int currentFrameIndex;
   @override
   @JsonKey()
-  final int currentRollCount;
+  final int currentRollIndex;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GameState(finalScore: $finalScore, rolls: $rolls, currentFrameCount: $currentFrameCount, currentRollCount: $currentRollCount)';
+    return 'GameState(finalScore: $finalScore, rolls: $rolls, frames: $frames, currentFrameIndex: $currentFrameIndex, currentRollIndex: $currentRollIndex)';
   }
 
   @override
@@ -439,8 +461,9 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
       ..add(DiagnosticsProperty('type', 'GameState'))
       ..add(DiagnosticsProperty('finalScore', finalScore))
       ..add(DiagnosticsProperty('rolls', rolls))
-      ..add(DiagnosticsProperty('currentFrameCount', currentFrameCount))
-      ..add(DiagnosticsProperty('currentRollCount', currentRollCount));
+      ..add(DiagnosticsProperty('frames', frames))
+      ..add(DiagnosticsProperty('currentFrameIndex', currentFrameIndex))
+      ..add(DiagnosticsProperty('currentRollIndex', currentRollIndex));
   }
 
   @override
@@ -451,10 +474,11 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
             const DeepCollectionEquality()
                 .equals(other.finalScore, finalScore) &&
             const DeepCollectionEquality().equals(other._rolls, _rolls) &&
+            const DeepCollectionEquality().equals(other._frames, _frames) &&
             const DeepCollectionEquality()
-                .equals(other.currentFrameCount, currentFrameCount) &&
+                .equals(other.currentFrameIndex, currentFrameIndex) &&
             const DeepCollectionEquality()
-                .equals(other.currentRollCount, currentRollCount));
+                .equals(other.currentRollIndex, currentRollIndex));
   }
 
   @override
@@ -462,8 +486,9 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
       runtimeType,
       const DeepCollectionEquality().hash(finalScore),
       const DeepCollectionEquality().hash(_rolls),
-      const DeepCollectionEquality().hash(currentFrameCount),
-      const DeepCollectionEquality().hash(currentRollCount));
+      const DeepCollectionEquality().hash(_frames),
+      const DeepCollectionEquality().hash(currentFrameIndex),
+      const DeepCollectionEquality().hash(currentRollIndex));
 
   @JsonKey(ignore: true)
   @override
@@ -475,17 +500,20 @@ abstract class _GameState implements GameState {
   const factory _GameState(
       {final int finalScore,
       final List<int> rolls,
-      final int currentFrameCount,
-      final int currentRollCount}) = _$_GameState;
+      required final List<Frame> frames,
+      final int currentFrameIndex,
+      final int currentRollIndex}) = _$_GameState;
 
   @override
   int get finalScore => throw _privateConstructorUsedError;
   @override
   List<int> get rolls => throw _privateConstructorUsedError;
   @override
-  int get currentFrameCount => throw _privateConstructorUsedError;
+  List<Frame> get frames => throw _privateConstructorUsedError;
   @override
-  int get currentRollCount => throw _privateConstructorUsedError;
+  int get currentFrameIndex => throw _privateConstructorUsedError;
+  @override
+  int get currentRollIndex => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$$_GameStateCopyWith<_$_GameState> get copyWith =>

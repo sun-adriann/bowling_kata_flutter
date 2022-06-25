@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'features/game/bloc/game_bloc.dart';
 import 'features/game/view/game_view.dart';
 
 void main() {
@@ -11,11 +13,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bowling Kata',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
-      home: const GameView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GameBloc>(create: (_) => GameBloc()),
+      ],
+      child: MaterialApp(
+        title: 'Bowling Kata',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primarySwatch: Colors.blueGrey),
+        home: const GameView(),
+      ),
     );
   }
 }

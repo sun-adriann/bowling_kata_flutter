@@ -5,9 +5,11 @@ class GameState with _$GameState {
   const factory GameState({
     @Default(0) int finalScore,
     @Default([]) List<int> rolls,
-    @Default(0) int currentFrameCount,
-    @Default(0) int currentRollCount,
+    required List<Frame> frames,
+    @Default(0) int currentFrameIndex,
+    @Default(0) int currentRollIndex,
   }) = _GameState;
 
- factory GameState.initial() => const _GameState();
+  factory GameState.initial() =>
+      _GameState(frames: List.generate(10, (_) => Frame.empty()));
 }
