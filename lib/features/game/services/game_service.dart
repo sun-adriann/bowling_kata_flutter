@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../models/frame.dart';
 import 'i_game_service.dart';
 
+@Environment('prod')
 @Injectable(as: IGameService)
 class GameService implements IGameService {
   @override

@@ -5,8 +5,13 @@ import 'config/dependency_injection.dart';
 import 'features/game/bloc/game_bloc.dart';
 import 'features/game/views/game_view.dart';
 
+class Environment {
+  static const test = 'test';
+  static const prod = 'prod';
+}
+
 void main() {
-  configureDependencies();
+  configureDependencies(Environment.prod);
   runApp(const App());
 }
 
