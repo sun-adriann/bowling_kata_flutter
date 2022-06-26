@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'components/final_score.dart';
 import 'components/roll_buttons.dart';
 import 'components/scoreboard.dart';
 
@@ -23,8 +22,6 @@ class GameView extends StatelessWidget {
             Text('Tap on the number of pins knocked down'),
             SizedBox(height: 30),
             RollButtons(),
-            SizedBox(height: 40),
-            FinalScore(),
           ],
         ),
       ),

@@ -15,6 +15,15 @@ class _RollButtonsState extends State<RollButtons> {
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
       builder: (context, state) {
+        final lastFrameScores = state.frames.last.scores;
+
+        if (lastFrameScores.isNotEmpty) {
+          if (lastFrameScores.length == 3 &&
+              lastFrameScores.reduce((a, b) => a + b) > 10) {
+            return buildFinalScore(state);
+          }
+        }
+
         return Wrap(
           alignment: WrapAlignment.center,
           spacing: 24.0,
@@ -25,6 +34,29 @@ class _RollButtonsState extends State<RollButtons> {
     );
   }
 
+  Widget buildFinalScore(GameState state) {
+    return Column(
+      children: [
+        Text(
+          'Final score: ${state.frames.last.totalScore}',
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        const SizedBox(height: 30),
+        ElevatedButton(
+          onPressed: () {
+            context.read<GameBloc>().add(const GameEvent.resetGame());
+          },
+          child: const Text('Reset game'),
+        ),
+        const SizedBox(height: 40),
+        Image.asset(
+          'assets/gifs/rolling.gif',
+          width: 200,
+        ),
+      ],
+    );
+  }
+
   List<Widget> buildPinButtons(GameState state) {
     final currentFrame = state.frames[state.currentFrameIndex];
     int numberOfButtons = 10;
@@ -32,18 +64,9 @@ class _RollButtonsState extends State<RollButtons> {
 
     if (state.frames.last == currentFrame) {
       // TODO
-    } else {
-      if (state.frames.indexOf(currentFrame) != 9 &&
-          currentFrame.scores.isNotEmpty) {
-        numberOfButtons = numberOfButtons - currentFrame.scores.first;
-      }
+    } else if (currentFrame.scores.isNotEmpty) {
+      numberOfButtons = numberOfButtons - currentFrame.scores.first;
     }
-
-    // if (frame.scores.length == 1) {
-    //   pinsDown = Random().nextInt(10 - frame.scores.first);
-    // } else {
-    //   pinsDown = Random().nextInt(11);
-    // }
 
     for (int index = 0; index <= numberOfButtons; index++) {
       buttons.add(ElevatedButton(
