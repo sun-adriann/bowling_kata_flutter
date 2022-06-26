@@ -11,20 +11,38 @@ class Scoreboard extends StatelessWidget {
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.only(top: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...state.frames.map(
-                (frame) => _Frame(
-                  scores: frame.displayedScores.join(' '),
-                  totalScore: frame.totalScore.toString(),
-                  isTotalScoreVisible: frame.isTotalScoreVisible,
-                ),
-              )
-            ],
-          ),
+        final firstHalf = state.frames.take(5);
+        final otherHalf = state.frames.skip(5).take(5);
+
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...firstHalf.map(
+                  (frame) => _Frame(
+                    index: 0,
+                    scores: frame.displayedScores.join(' '),
+                    totalScore: frame.totalScore.toString(),
+                    isTotalScoreVisible: frame.isTotalScoreVisible,
+                  ),
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...otherHalf.map(
+                  (frame) => _Frame(
+                    index: 0,
+                    scores: frame.displayedScores.join(' '),
+                    totalScore: frame.totalScore.toString(),
+                    isTotalScoreVisible: frame.isTotalScoreVisible,
+                  ),
+                )
+              ],
+            ),
+          ],
         );
       },
     );
@@ -32,12 +50,14 @@ class Scoreboard extends StatelessWidget {
 }
 
 class _Frame extends StatelessWidget {
+  final int index;
   final String scores;
   final String totalScore;
   final bool isTotalScoreVisible;
 
   const _Frame({
     Key? key,
+    required this.index,
     required this.scores,
     required this.totalScore,
     required this.isTotalScoreVisible,
@@ -48,7 +68,7 @@ class _Frame extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 36,
+          width: 65,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey.shade400),
           ),
@@ -64,11 +84,10 @@ class _Frame extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                width: 10,
                 height: 30,
                 child: Text(
                   isTotalScoreVisible ? totalScore : '',
-                  // style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ],

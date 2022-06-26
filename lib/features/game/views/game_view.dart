@@ -14,7 +14,7 @@ class GameView extends StatelessWidget {
       appBar: AppBar(title: const Text('Bowling Kata')),
       body: Column(
         children: const [
-          SizedBox(height: 12),
+          SizedBox(height: 40),
           Scoreboard(),
           SizedBox(height: 40),
           CurrentFrameScore(),

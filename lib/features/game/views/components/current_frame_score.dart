@@ -13,7 +13,7 @@ class CurrentFrameScore extends StatelessWidget {
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) => previous.activity != current.activity,
       builder: (context, state) {
-        late String scoreText;
+        String scoreText = '';
         final lastRoll = state.rolls.isEmpty ? null : state.rolls.last;
 
         if (state.activity == GameActivity.loading) {
@@ -21,13 +21,13 @@ class CurrentFrameScore extends StatelessWidget {
         } else if (lastRoll == null) {
           scoreText = '';
         } else if (lastRoll == 1) {
-          scoreText = 'You knocked \nout $lastRoll pin!';
+          scoreText = 'You knocked \ndown $lastRoll pin!';
         } else if (lastRoll == 10) {
-          scoreText = 'Strike! You \nknocked out all \nthe pins!';
+          scoreText = 'Strike! You \nknocked down \nall the pins!';
         } else if (lastRoll == 0) {
           scoreText = 'Gutter ball. \nYou didn\'t hit \nanything.';
         } else if (lastRoll > 1) {
-          scoreText = 'You knocked \nout $lastRoll pins!';
+          scoreText = 'You knocked \ndown $lastRoll pins!';
         }
 
         return Column(
