@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'config/dependency_injection.dart';
 import 'features/game/bloc/game_bloc.dart';
-import 'features/game/view/game_view.dart';
+import 'features/game/views/game_view.dart';
 
 void main() {
+  configureDependencies();
   runApp(const App());
 }
 
@@ -15,7 +17,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<GameBloc>(create: (_) => GameBloc()),
+        BlocProvider<GameBloc>(create: (_) => sl<GameBloc>()),
       ],
       child: MaterialApp(
         title: 'Bowling Kata',
