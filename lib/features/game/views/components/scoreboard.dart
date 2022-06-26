@@ -11,38 +11,17 @@ class Scoreboard extends StatelessWidget {
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
-        final firstHalf = state.frames.take(5);
-        final otherHalf = state.frames.skip(5).take(5);
-
-        return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...firstHalf.map(
-                  (frame) => _Frame(
-                    index: 0,
-                    scores: frame.displayedScores.join(' '),
-                    totalScore: frame.totalScore.toString(),
-                    isTotalScoreVisible: frame.isTotalScoreVisible,
-                  ),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...otherHalf.map(
-                  (frame) => _Frame(
-                    index: 0,
-                    scores: frame.displayedScores.join(' '),
-                    totalScore: frame.totalScore.toString(),
-                    isTotalScoreVisible: frame.isTotalScoreVisible,
-                  ),
-                )
-              ],
-            ),
-          ],
+        return Wrap(
+          children: state.frames
+              .map(
+                (e) => _Frame(
+                  index: state.frames.indexOf(e),
+                  scores: e.displayedScores.join(' '),
+                  totalScore: e.totalScore.toString(),
+                  isTotalScoreVisible: e.isTotalScoreVisible,
+                ),
+              )
+              .toList(),
         );
       },
     );
@@ -65,35 +44,37 @@ class _Frame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 65,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade400),
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    height: 18,
-                    child: Text(scores),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-                child: Text(
-                  isTotalScoreVisible ? totalScore : '',
-                  style: Theme.of(context).textTheme.headline6,
+    return SizedBox(
+      width: 70,
+      height: 60,
+      child: Row(
+        children: [
+          Container(
+            width: 70,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade400),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      child: Text(scores),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                SizedBox(
+                  child: Text(
+                    isTotalScoreVisible ? totalScore : '',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

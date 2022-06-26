@@ -8,6 +8,30 @@ import 'i_game_service.dart';
 @Injectable(as: IGameService)
 class GameService implements IGameService {
   @override
+  Frame updateFrameForDownedPins(Frame frame, int pinsDown) {
+    String displayScore = pinsDown.toString();
+
+    frame = frame.copyWith(scores: [...frame.scores, pinsDown]);
+
+    if (pinsDown == 0) {
+      displayScore = '-';
+    }
+
+    if (pinsDown == 10) {
+      displayScore = 'X';
+    }
+
+    if (frame.scores.length > 1 &&
+        frame.scores.first + frame.scores.last == 10) {
+      displayScore = '/';
+    }
+
+    return frame.copyWith(
+      displayedScores: [...frame.displayedScores, displayScore],
+    );
+  }
+
+  @override
   List<Frame> calculateFramesScores(List<Frame> frames) {
     int roll = 0;
     int score = 0;
@@ -35,6 +59,10 @@ class GameService implements IGameService {
           isTotalScoreVisible = true;
         }
       } catch (e) {
+        if (frameIndex == 9 && frames[frameIndex].scores.length > 1) {
+          score += frames[frameIndex].scores.reduce((a, b) => a + b);
+        }
+
         if (frames[frameIndex].scores.length == 1) {
           score += frames[frameIndex].scores.first;
         }
@@ -48,91 +76,4 @@ class GameService implements IGameService {
 
     return frames;
   }
-
-  @override
-  Frame rollForFrame(Frame frame) {
-    late int pinsDown;
-    late String displayScore;
-
-    if (frame.scores.length == 1) {
-      pinsDown = Random().nextInt(10 - frame.scores.first);
-    } else {
-      pinsDown = Random().nextInt(11);
-    }
-
-    displayScore = pinsDown.toString();
-
-    if (pinsDown == 0) {
-      displayScore = '-';
-    }
-
-    if (pinsDown == 10) {
-      displayScore = 'X';
-    }
-
-    if (frame.scores.length > 1 &&
-        frame.scores.first + frame.scores.last == 10) {
-      displayScore = '/';
-    }
-
-    return frame.copyWith(
-      scores: [...frame.scores, pinsDown],
-      displayedScores: [...frame.displayedScores, displayScore],
-    );
-  }
 }
-
-// class Game {
-//   final List<int> _rolls = List.filled(21, 0);
-//   int _currentRoll = 0;
-
-//   void roll(int pinsDown) {
-//     _rolls[_currentRoll++] = pinsDown;
-//   }
-
-//   void rollMany(List<int> rolls) {
-//     for (int pinsDown in rolls) {
-//       roll(pinsDown);
-//     }
-//   }
-
-//   int _sumOfRollsInFrame(int frame) {
-//     return _rolls[frame] + _rolls[frame + 1];
-//   }
-
-//   bool _isStrike(int frame) {
-//     return _rolls[frame] == 10;
-//   }
-
-//   bool _isSpare(int frame) {
-//     return _rolls[frame] + _rolls[frame + 1] == 10;
-//   }
-
-//   int _strikeBonus(int frame) {
-//     return _rolls[frame + 1] + _rolls[frame + 2];
-//   }
-
-//   int _spareBonus(int frame) {
-//     return _rolls[frame + 2];
-//   }
-
-//   int get score {
-//     int score = 0;
-//     int roll = 0;
-
-//     for (var frame = 0; frame < 10; frame++) {
-//       if (_isStrike(roll)) {
-//         score += 10 + _strikeBonus(roll);
-//         roll++;
-//       } else if (_isSpare(roll)) {
-//         score += 10 + _spareBonus(roll);
-//         roll += 2;
-//       } else {
-//         score += _sumOfRollsInFrame(roll);
-//         roll += 2;
-//       }
-//     }
-
-//     return score;
-//   }
-// }

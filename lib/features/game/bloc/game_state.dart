@@ -5,9 +5,8 @@ enum GameActivity { idle, loading }
 @freezed
 class GameState with _$GameState {
   const factory GameState({
-    @Default(0) int finalScore,
-    @Default([]) List<int> rolls,
     required List<Frame> frames,
+    @Default([]) List<int> rolls,
     @Default(0) int currentFrameIndex,
     @Default(0) int currentRollIndex,
     @Default(GameActivity.idle) GameActivity activity,

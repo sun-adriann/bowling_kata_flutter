@@ -20,28 +20,28 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
   Future<void> _eventHandler(GameEvent event, Emitter<GameState> emit) async {
     await event.map(
-      roll: (_) async => _roll(state, emit),
+      roll: (e) async => _roll(state, emit, e.pinsDown),
       resetGame: (_) async => emit(GameState.initial()),
     );
   }
 
-  Future<void> _roll(GameState state, Emitter<GameState> emit) async {
+  Future<void> _roll(
+      GameState state, Emitter<GameState> emit, int pinsDown) async {
     emit(state.copyWith(activity: GameActivity.loading));
 
-    /// Give the "roll.gif" animation time to play out. This also simulates
-    /// asynchronous fetching of data from, let's say, an API or something.
-    await Future.delayed(const Duration(seconds: 2));
-
+    int frameIndex = state.currentFrameIndex;
     final rolls = [...state.rolls];
     final frames = [...state.frames];
-    int frameIndex = state.currentFrameIndex;
-    frames[frameIndex] = gameService.rollForFrame(frames[frameIndex]);
+
+    frames[frameIndex] =
+        gameService.updateFrameForDownedPins(frames[frameIndex], pinsDown);
     final updatedFrames = gameService.calculateFramesScores(frames);
 
     rolls.add(updatedFrames[frameIndex].scores.last);
 
-    if (updatedFrames[frameIndex].scores.length > 1 ||
-        updatedFrames[frameIndex].scores.first == 10) {
+    if ((updatedFrames[frameIndex].scores.length > 1 ||
+            updatedFrames[frameIndex].scores.first == 10) &&
+        frameIndex != 9) {
       frameIndex++;
     }
 

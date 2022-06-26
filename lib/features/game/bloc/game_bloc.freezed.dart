@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GameEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() roll,
+    required TResult Function(int pinsDown) roll,
     required TResult Function() resetGame,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? roll,
+    TResult Function(int pinsDown)? roll,
     TResult Function()? resetGame,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? roll,
+    TResult Function(int pinsDown)? roll,
     TResult Function()? resetGame,
     required TResult orElse(),
   }) =>
@@ -75,6 +75,7 @@ class _$GameEventCopyWithImpl<$Res> implements $GameEventCopyWith<$Res> {
 abstract class _$$_RollCopyWith<$Res> {
   factory _$$_RollCopyWith(_$_Roll value, $Res Function(_$_Roll) then) =
       __$$_RollCopyWithImpl<$Res>;
+  $Res call({int pinsDown});
 }
 
 /// @nodoc
@@ -85,60 +86,85 @@ class __$$_RollCopyWithImpl<$Res> extends _$GameEventCopyWithImpl<$Res>
 
   @override
   _$_Roll get _value => super._value as _$_Roll;
+
+  @override
+  $Res call({
+    Object? pinsDown = freezed,
+  }) {
+    return _then(_$_Roll(
+      pinsDown == freezed
+          ? _value.pinsDown
+          : pinsDown // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Roll with DiagnosticableTreeMixin implements _Roll {
-  const _$_Roll();
+  const _$_Roll(this.pinsDown);
+
+  @override
+  final int pinsDown;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GameEvent.roll()';
+    return 'GameEvent.roll(pinsDown: $pinsDown)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'GameEvent.roll'));
+    properties
+      ..add(DiagnosticsProperty('type', 'GameEvent.roll'))
+      ..add(DiagnosticsProperty('pinsDown', pinsDown));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Roll);
+        (other.runtimeType == runtimeType &&
+            other is _$_Roll &&
+            const DeepCollectionEquality().equals(other.pinsDown, pinsDown));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(pinsDown));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_RollCopyWith<_$_Roll> get copyWith =>
+      __$$_RollCopyWithImpl<_$_Roll>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() roll,
+    required TResult Function(int pinsDown) roll,
     required TResult Function() resetGame,
   }) {
-    return roll();
+    return roll(pinsDown);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? roll,
+    TResult Function(int pinsDown)? roll,
     TResult Function()? resetGame,
   }) {
-    return roll?.call();
+    return roll?.call(pinsDown);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? roll,
+    TResult Function(int pinsDown)? roll,
     TResult Function()? resetGame,
     required TResult orElse(),
   }) {
     if (roll != null) {
-      return roll();
+      return roll(pinsDown);
     }
     return orElse();
   }
@@ -176,7 +202,11 @@ class _$_Roll with DiagnosticableTreeMixin implements _Roll {
 }
 
 abstract class _Roll implements GameEvent {
-  const factory _Roll() = _$_Roll;
+  const factory _Roll(final int pinsDown) = _$_Roll;
+
+  int get pinsDown => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$_RollCopyWith<_$_Roll> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -225,7 +255,7 @@ class _$_ResetGame with DiagnosticableTreeMixin implements _ResetGame {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() roll,
+    required TResult Function(int pinsDown) roll,
     required TResult Function() resetGame,
   }) {
     return resetGame();
@@ -234,7 +264,7 @@ class _$_ResetGame with DiagnosticableTreeMixin implements _ResetGame {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? roll,
+    TResult Function(int pinsDown)? roll,
     TResult Function()? resetGame,
   }) {
     return resetGame?.call();
@@ -243,7 +273,7 @@ class _$_ResetGame with DiagnosticableTreeMixin implements _ResetGame {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? roll,
+    TResult Function(int pinsDown)? roll,
     TResult Function()? resetGame,
     required TResult orElse(),
   }) {
@@ -291,9 +321,8 @@ abstract class _ResetGame implements GameEvent {
 
 /// @nodoc
 mixin _$GameState {
-  int get finalScore => throw _privateConstructorUsedError;
-  List<int> get rolls => throw _privateConstructorUsedError;
   List<Frame> get frames => throw _privateConstructorUsedError;
+  List<int> get rolls => throw _privateConstructorUsedError;
   int get currentFrameIndex => throw _privateConstructorUsedError;
   int get currentRollIndex => throw _privateConstructorUsedError;
   GameActivity get activity => throw _privateConstructorUsedError;
@@ -308,9 +337,8 @@ abstract class $GameStateCopyWith<$Res> {
   factory $GameStateCopyWith(GameState value, $Res Function(GameState) then) =
       _$GameStateCopyWithImpl<$Res>;
   $Res call(
-      {int finalScore,
+      {List<Frame> frames,
       List<int> rolls,
-      List<Frame> frames,
       int currentFrameIndex,
       int currentRollIndex,
       GameActivity activity});
@@ -326,26 +354,21 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? finalScore = freezed,
-    Object? rolls = freezed,
     Object? frames = freezed,
+    Object? rolls = freezed,
     Object? currentFrameIndex = freezed,
     Object? currentRollIndex = freezed,
     Object? activity = freezed,
   }) {
     return _then(_value.copyWith(
-      finalScore: finalScore == freezed
-          ? _value.finalScore
-          : finalScore // ignore: cast_nullable_to_non_nullable
-              as int,
-      rolls: rolls == freezed
-          ? _value.rolls
-          : rolls // ignore: cast_nullable_to_non_nullable
-              as List<int>,
       frames: frames == freezed
           ? _value.frames
           : frames // ignore: cast_nullable_to_non_nullable
               as List<Frame>,
+      rolls: rolls == freezed
+          ? _value.rolls
+          : rolls // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       currentFrameIndex: currentFrameIndex == freezed
           ? _value.currentFrameIndex
           : currentFrameIndex // ignore: cast_nullable_to_non_nullable
@@ -369,9 +392,8 @@ abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
       __$$_GameStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int finalScore,
+      {List<Frame> frames,
       List<int> rolls,
-      List<Frame> frames,
       int currentFrameIndex,
       int currentRollIndex,
       GameActivity activity});
@@ -389,26 +411,21 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? finalScore = freezed,
-    Object? rolls = freezed,
     Object? frames = freezed,
+    Object? rolls = freezed,
     Object? currentFrameIndex = freezed,
     Object? currentRollIndex = freezed,
     Object? activity = freezed,
   }) {
     return _then(_$_GameState(
-      finalScore: finalScore == freezed
-          ? _value.finalScore
-          : finalScore // ignore: cast_nullable_to_non_nullable
-              as int,
-      rolls: rolls == freezed
-          ? _value._rolls
-          : rolls // ignore: cast_nullable_to_non_nullable
-              as List<int>,
       frames: frames == freezed
           ? _value._frames
           : frames // ignore: cast_nullable_to_non_nullable
               as List<Frame>,
+      rolls: rolls == freezed
+          ? _value._rolls
+          : rolls // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       currentFrameIndex: currentFrameIndex == freezed
           ? _value.currentFrameIndex
           : currentFrameIndex // ignore: cast_nullable_to_non_nullable
@@ -429,31 +446,27 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
 
 class _$_GameState with DiagnosticableTreeMixin implements _GameState {
   const _$_GameState(
-      {this.finalScore = 0,
+      {required final List<Frame> frames,
       final List<int> rolls = const [],
-      required final List<Frame> frames,
       this.currentFrameIndex = 0,
       this.currentRollIndex = 0,
       this.activity = GameActivity.idle})
-      : _rolls = rolls,
-        _frames = frames;
-
-  @override
-  @JsonKey()
-  final int finalScore;
-  final List<int> _rolls;
-  @override
-  @JsonKey()
-  List<int> get rolls {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_rolls);
-  }
+      : _frames = frames,
+        _rolls = rolls;
 
   final List<Frame> _frames;
   @override
   List<Frame> get frames {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_frames);
+  }
+
+  final List<int> _rolls;
+  @override
+  @JsonKey()
+  List<int> get rolls {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_rolls);
   }
 
   @override
@@ -468,7 +481,7 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GameState(finalScore: $finalScore, rolls: $rolls, frames: $frames, currentFrameIndex: $currentFrameIndex, currentRollIndex: $currentRollIndex, activity: $activity)';
+    return 'GameState(frames: $frames, rolls: $rolls, currentFrameIndex: $currentFrameIndex, currentRollIndex: $currentRollIndex, activity: $activity)';
   }
 
   @override
@@ -476,9 +489,8 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'GameState'))
-      ..add(DiagnosticsProperty('finalScore', finalScore))
-      ..add(DiagnosticsProperty('rolls', rolls))
       ..add(DiagnosticsProperty('frames', frames))
+      ..add(DiagnosticsProperty('rolls', rolls))
       ..add(DiagnosticsProperty('currentFrameIndex', currentFrameIndex))
       ..add(DiagnosticsProperty('currentRollIndex', currentRollIndex))
       ..add(DiagnosticsProperty('activity', activity));
@@ -489,10 +501,8 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GameState &&
-            const DeepCollectionEquality()
-                .equals(other.finalScore, finalScore) &&
-            const DeepCollectionEquality().equals(other._rolls, _rolls) &&
             const DeepCollectionEquality().equals(other._frames, _frames) &&
+            const DeepCollectionEquality().equals(other._rolls, _rolls) &&
             const DeepCollectionEquality()
                 .equals(other.currentFrameIndex, currentFrameIndex) &&
             const DeepCollectionEquality()
@@ -503,9 +513,8 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(finalScore),
-      const DeepCollectionEquality().hash(_rolls),
       const DeepCollectionEquality().hash(_frames),
+      const DeepCollectionEquality().hash(_rolls),
       const DeepCollectionEquality().hash(currentFrameIndex),
       const DeepCollectionEquality().hash(currentRollIndex),
       const DeepCollectionEquality().hash(activity));
@@ -518,19 +527,16 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
 
 abstract class _GameState implements GameState {
   const factory _GameState(
-      {final int finalScore,
+      {required final List<Frame> frames,
       final List<int> rolls,
-      required final List<Frame> frames,
       final int currentFrameIndex,
       final int currentRollIndex,
       final GameActivity activity}) = _$_GameState;
 
   @override
-  int get finalScore => throw _privateConstructorUsedError;
+  List<Frame> get frames => throw _privateConstructorUsedError;
   @override
   List<int> get rolls => throw _privateConstructorUsedError;
-  @override
-  List<Frame> get frames => throw _privateConstructorUsedError;
   @override
   int get currentFrameIndex => throw _privateConstructorUsedError;
   @override

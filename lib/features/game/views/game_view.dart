@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'components/action_button.dart';
-import 'components/current_frame_score.dart';
 import 'components/final_score.dart';
+import 'components/roll_buttons.dart';
 import 'components/scoreboard.dart';
 
 class GameView extends StatelessWidget {
@@ -12,18 +11,23 @@ class GameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Bowling Kata')),
-      body: Column(
-        children: const [
-          SizedBox(height: 40),
-          Scoreboard(),
-          SizedBox(height: 40),
-          CurrentFrameScore(),
-          SizedBox(height: 40),
-          FinalScore(),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: const [
+            SizedBox(height: 20),
+            Text('Scoreboard'),
+            SizedBox(height: 6),
+            Scoreboard(),
+            SizedBox(height: 40),
+            Text('Tap on the number of pins knocked down'),
+            SizedBox(height: 30),
+            RollButtons(),
+            SizedBox(height: 40),
+            FinalScore(),
+          ],
+        ),
       ),
-      floatingActionButton: const ActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

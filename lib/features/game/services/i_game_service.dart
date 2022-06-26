@@ -1,6 +1,6 @@
 import '../models/frame.dart';
 
 abstract class IGameService {
-  Frame rollForFrame(Frame frame);
+  Frame updateFrameForDownedPins(Frame frame, int pinsDown);
   List<Frame> calculateFramesScores(List<Frame> frames);
 }
