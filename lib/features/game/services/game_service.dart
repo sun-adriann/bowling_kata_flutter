@@ -27,6 +27,10 @@ class GameService implements IGameService {
       displayScore = '/';
     }
 
+    if (frame.scores.length > 2) {
+      displayScore = pinsDown.toString();
+    }
+
     return frame.copyWith(
       displayedScores: [...frame.displayedScores, displayScore],
     );
