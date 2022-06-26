@@ -10,8 +10,9 @@ class GameState with _$GameState {
     required List<Frame> frames,
     @Default(0) int currentFrameIndex,
     @Default(0) int currentRollIndex,
-    @Default(GameActivity.loading) GameActivity activity,
+    @Default(GameActivity.idle) GameActivity activity,
   }) = _GameState;
 
-  factory GameState.initial() => _GameState(frames: Frame.generateList());
+  factory GameState.initial() =>
+      _GameState(frames: List.generate(10, (index) => Frame.empty()));
 }

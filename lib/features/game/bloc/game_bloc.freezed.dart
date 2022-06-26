@@ -434,7 +434,7 @@ class _$_GameState with DiagnosticableTreeMixin implements _GameState {
       required final List<Frame> frames,
       this.currentFrameIndex = 0,
       this.currentRollIndex = 0,
-      this.activity = GameActivity.loading})
+      this.activity = GameActivity.idle})
       : _rolls = rolls,
         _frames = frames;
 

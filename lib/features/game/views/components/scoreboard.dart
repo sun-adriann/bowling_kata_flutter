@@ -11,17 +11,20 @@ class Scoreboard extends StatelessWidget {
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...state.frames.map(
-              (frame) => _Frame(
-                scores: frame.displayedScores.join(),
-                totalScore: frame.totalScore.toString(),
-                isTotalScoreVisible: frame.isTotalScoreVisible,
-              ),
-            )
-          ],
+        return Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ...state.frames.map(
+                (frame) => _Frame(
+                  scores: frame.displayedScores.join(' '),
+                  totalScore: frame.totalScore.toString(),
+                  isTotalScoreVisible: frame.isTotalScoreVisible,
+                ),
+              )
+            ],
+          ),
         );
       },
     );
@@ -65,7 +68,7 @@ class _Frame extends StatelessWidget {
                 height: 30,
                 child: Text(
                   isTotalScoreVisible ? totalScore : '',
-                  style: Theme.of(context).textTheme.headline6,
+                  // style: Theme.of(context).textTheme.headline6,
                 ),
               ),
             ],

@@ -8,27 +8,26 @@ class CurrentFrameScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final imageGif = Image.asset("assets/gifs/roll.gif", width: 300);
+
     return BlocBuilder<GameBloc, GameState>(
       buildWhen: (previous, current) => previous.activity != current.activity,
       builder: (context, state) {
-        if (state.currentRollIndex == 0) {
-          return const SizedBox();
-        }
+        late String scoreText;
+        final lastRoll = state.rolls.isEmpty ? null : state.rolls.last;
 
         if (state.activity == GameActivity.loading) {
-          return Image.asset("assets/gifs/roll.gif");
-        }
-
-        late String scoreText;
-
-        if (state.rolls.last == 1) {
-          scoreText = 'You knocked \nout ${state.rolls.last} pin!';
-        } else if (state.rolls.last == 10) {
-          scoreText = 'Strike! You \nknocked out all the pins!';
-        } else if (state.rolls.last == 0) {
+          scoreText = 'Rolling...';
+        } else if (lastRoll == null) {
+          scoreText = '';
+        } else if (lastRoll == 1) {
+          scoreText = 'You knocked \nout $lastRoll pin!';
+        } else if (lastRoll == 10) {
+          scoreText = 'Strike! You \nknocked out all \nthe pins!';
+        } else if (lastRoll == 0) {
           scoreText = 'Gutter ball. \nYou didn\'t hit \nanything.';
-        } else {
-          scoreText = 'You knocked \nout ${state.rolls.last} pins!';
+        } else if (lastRoll > 1) {
+          scoreText = 'You knocked \nout $lastRoll pins!';
         }
 
         return Column(
@@ -37,6 +36,10 @@ class CurrentFrameScore extends StatelessWidget {
               scoreText,
               style: Theme.of(context).textTheme.headline4,
               textAlign: TextAlign.center,
+            ),
+            Visibility(
+              visible: state.activity == GameActivity.loading,
+              child: imageGif,
             ),
           ],
         );

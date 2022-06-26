@@ -12,21 +12,14 @@ class FinalScore extends StatelessWidget {
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         if (state.currentFrameIndex != 10) {
-          return const SizedBox();
+          return Container();
         }
 
         return Column(
           children: [
             Text(
               'Final score: ${state.finalScore}',
-              style: Theme.of(context).textTheme.headline5,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                context.read<GameBloc>().add(const GameEvent.resetGame());
-              },
-              child: const Text('Reset game'),
+              style: Theme.of(context).textTheme.headline3,
             ),
           ],
         );

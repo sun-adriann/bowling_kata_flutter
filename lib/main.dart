@@ -19,11 +19,10 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider<GameBloc>(create: (_) => sl<GameBloc>()),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'Bowling Kata',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.blueGrey),
-        home: const GameView(),
+        home: GameView(),
       ),
     );
   }

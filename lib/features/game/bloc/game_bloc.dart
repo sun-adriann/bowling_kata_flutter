@@ -21,23 +21,32 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   Future<void> _eventHandler(GameEvent event, Emitter<GameState> emit) async {
     await event.map(
       roll: (_) async => _roll(state, emit),
-      resetGame: (_) async => _resetGame(state, emit),
+      resetGame: (_) async => emit(GameState.initial()),
     );
   }
 
   Future<void> _roll(GameState state, Emitter<GameState> emit) async {
     emit(state.copyWith(activity: GameActivity.loading));
 
+    /// Give the "roll.gif" animation time to play out. This also
+    ///  simulates asynchronous fetching of data from somewhere.
+    await Future.delayed(const Duration(seconds: 2));
+
     int frameIndex = state.currentFrameIndex;
-    final frames = [...state.frames];
-    final updatedFrame =
-        await gameService.roll(state.frames[state.currentFrameIndex]);
     final rolls = [...state.rolls];
+    final frames = [...state.frames];
 
-    rolls.add(updatedFrame.scores.last);
-    frames[frameIndex] = updatedFrame;
+    frames[frameIndex] = gameService.caculateFrameScore(frameIndex, frames);
+    rolls.add(frames[frameIndex].scores.last);
 
-    if (updatedFrame.scores.length > 1) {
+    // calculate previous frame scores
+    if (frameIndex != 0 && !frames[frameIndex - 1].isTotalScoreVisible) {
+      frames[frameIndex - 1] =
+          gameService.caculatePreviousFrameScore(frameIndex, frames);
+    }
+
+    if (frames[frameIndex].scores.length > 1 ||
+        frames[frameIndex].scores.first == 10) {
       frameIndex++;
     }
 
@@ -48,9 +57,11 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       rolls: rolls,
       frames: frames,
     ));
-  }
 
-  Future<void> _resetGame(GameState state, Emitter<GameState> emit) async {
-    emit(GameState.initial());
+    if (state.currentFrameIndex == 10 &&
+        frames[frameIndex].scores.length >= 2) {
+      // final finalScore = gameService.calculateFinalScore([...state.rolls]);
+      // emit(state.copyWith(finalScore: finalScore));
+    }
   }
 }

@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Frame {
-  int get index => throw _privateConstructorUsedError;
   List<int> get scores => throw _privateConstructorUsedError;
   List<String> get displayedScores => throw _privateConstructorUsedError;
   bool get isTotalScoreVisible => throw _privateConstructorUsedError;
@@ -31,8 +30,7 @@ abstract class $FrameCopyWith<$Res> {
   factory $FrameCopyWith(Frame value, $Res Function(Frame) then) =
       _$FrameCopyWithImpl<$Res>;
   $Res call(
-      {int index,
-      List<int> scores,
+      {List<int> scores,
       List<String> displayedScores,
       bool isTotalScoreVisible,
       int totalScore});
@@ -48,17 +46,12 @@ class _$FrameCopyWithImpl<$Res> implements $FrameCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? index = freezed,
     Object? scores = freezed,
     Object? displayedScores = freezed,
     Object? isTotalScoreVisible = freezed,
     Object? totalScore = freezed,
   }) {
     return _then(_value.copyWith(
-      index: index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
       scores: scores == freezed
           ? _value.scores
           : scores // ignore: cast_nullable_to_non_nullable
@@ -85,8 +78,7 @@ abstract class _$$_FrameCopyWith<$Res> implements $FrameCopyWith<$Res> {
       __$$_FrameCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int index,
-      List<int> scores,
+      {List<int> scores,
       List<String> displayedScores,
       bool isTotalScoreVisible,
       int totalScore});
@@ -103,17 +95,12 @@ class __$$_FrameCopyWithImpl<$Res> extends _$FrameCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? index = freezed,
     Object? scores = freezed,
     Object? displayedScores = freezed,
     Object? isTotalScoreVisible = freezed,
     Object? totalScore = freezed,
   }) {
     return _then(_$_Frame(
-      index: index == freezed
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
       scores: scores == freezed
           ? _value._scores
           : scores // ignore: cast_nullable_to_non_nullable
@@ -138,8 +125,7 @@ class __$$_FrameCopyWithImpl<$Res> extends _$FrameCopyWithImpl<$Res>
 
 class _$_Frame extends _Frame with DiagnosticableTreeMixin {
   const _$_Frame(
-      {required this.index,
-      required final List<int> scores,
+      {required final List<int> scores,
       required final List<String> displayedScores,
       required this.isTotalScoreVisible,
       required this.totalScore})
@@ -147,8 +133,6 @@ class _$_Frame extends _Frame with DiagnosticableTreeMixin {
         _displayedScores = displayedScores,
         super._();
 
-  @override
-  final int index;
   final List<int> _scores;
   @override
   List<int> get scores {
@@ -170,7 +154,7 @@ class _$_Frame extends _Frame with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Frame(index: $index, scores: $scores, displayedScores: $displayedScores, isTotalScoreVisible: $isTotalScoreVisible, totalScore: $totalScore)';
+    return 'Frame(scores: $scores, displayedScores: $displayedScores, isTotalScoreVisible: $isTotalScoreVisible, totalScore: $totalScore)';
   }
 
   @override
@@ -178,7 +162,6 @@ class _$_Frame extends _Frame with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Frame'))
-      ..add(DiagnosticsProperty('index', index))
       ..add(DiagnosticsProperty('scores', scores))
       ..add(DiagnosticsProperty('displayedScores', displayedScores))
       ..add(DiagnosticsProperty('isTotalScoreVisible', isTotalScoreVisible))
@@ -190,7 +173,6 @@ class _$_Frame extends _Frame with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Frame &&
-            const DeepCollectionEquality().equals(other.index, index) &&
             const DeepCollectionEquality().equals(other._scores, _scores) &&
             const DeepCollectionEquality()
                 .equals(other._displayedScores, _displayedScores) &&
@@ -203,7 +185,6 @@ class _$_Frame extends _Frame with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(index),
       const DeepCollectionEquality().hash(_scores),
       const DeepCollectionEquality().hash(_displayedScores),
       const DeepCollectionEquality().hash(isTotalScoreVisible),
@@ -217,15 +198,12 @@ class _$_Frame extends _Frame with DiagnosticableTreeMixin {
 
 abstract class _Frame extends Frame {
   const factory _Frame(
-      {required final int index,
-      required final List<int> scores,
+      {required final List<int> scores,
       required final List<String> displayedScores,
       required final bool isTotalScoreVisible,
       required final int totalScore}) = _$_Frame;
   const _Frame._() : super._();
 
-  @override
-  int get index => throw _privateConstructorUsedError;
   @override
   List<int> get scores => throw _privateConstructorUsedError;
   @override
