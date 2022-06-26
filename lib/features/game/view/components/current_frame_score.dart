@@ -3,14 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/game_bloc.dart';
 
-class CurrentFrameScore extends StatefulWidget {
+class CurrentFrameScore extends StatelessWidget {
   const CurrentFrameScore({Key? key}) : super(key: key);
 
-  @override
-  State<CurrentFrameScore> createState() => _CurrentFrameScoreState();
-}
-
-class _CurrentFrameScoreState extends State<CurrentFrameScore> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
@@ -23,7 +18,9 @@ class _CurrentFrameScoreState extends State<CurrentFrameScore> {
         return Column(
           children: [
             Text(
-              'You knocked \nout ${state.rolls.last} pins!',
+              state.rolls.last == 1
+                  ? 'You knocked \nout ${state.rolls.last} pin!'
+                  : 'You knocked \nout ${state.rolls.last} pins!',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),

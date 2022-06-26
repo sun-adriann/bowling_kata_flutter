@@ -18,7 +18,7 @@ class FinalScore extends StatelessWidget {
         return Column(
           children: [
             Text(
-              'FINAL SCORE: ${state.finalScore}',
+              'Final score: ${state.finalScore}',
               style: Theme.of(context).textTheme.headline5,
             ),
             const SizedBox(height: 20),

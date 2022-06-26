@@ -6,14 +6,9 @@ import '../bloc/game_bloc.dart';
 import 'components/current_frame_score.dart';
 import 'components/scoreboard.dart';
 
-class GameView extends StatefulWidget {
-  const GameView({super.key});
+class GameView extends StatelessWidget {
+  const GameView({Key? key}) : super(key: key);
 
-  @override
-  State<GameView> createState() => _GameViewState();
-}
-
-class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +17,7 @@ class _GameViewState extends State<GameView> {
         padding: const EdgeInsets.all(14.0),
         child: Column(
           children: const [
-            SizedBox(height: 40),
+            SizedBox(height: 12),
             Scoreboard(),
             SizedBox(height: 40),
             CurrentFrameScore(),
@@ -40,6 +35,5 @@ class _GameViewState extends State<GameView> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
-    ;
   }
 }

@@ -3,14 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/game_bloc.dart';
 
-class Scoreboard extends StatefulWidget {
-  const Scoreboard({super.key});
+class Scoreboard extends StatelessWidget {
+  const Scoreboard({Key? key}) : super(key: key);
 
-  @override
-  State<Scoreboard> createState() => _ScoreboardState();
-}
-
-class _ScoreboardState extends State<Scoreboard> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GameBloc, GameState>(
