@@ -1,20 +1,34 @@
-class Frame {
-  List<int> scores;
-  List<String> displayedScores;
-  bool isTotalScoreVisible;
-  int totalScore;
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-  Frame({
-    required this.scores,
-    required this.displayedScores,
-    required this.isTotalScoreVisible,
-    required this.totalScore,
-  });
+part 'frame.freezed.dart';
 
-  factory Frame.empty() => Frame(
+@freezed
+class Frame with _$Frame {
+  const Frame._();
+  const factory Frame({
+    required int index,
+    required List<int> scores,
+    required List<String> displayedScores,
+    required bool isTotalScoreVisible,
+    required int totalScore,
+  }) = _Frame;
+
+  factory Frame.fromIndex(int index) => Frame(
+        index: index,
         scores: [],
         displayedScores: [],
         isTotalScoreVisible: false,
         totalScore: 0,
       );
+
+  static List<Frame> generateList() {
+    List<Frame> list = [];
+
+    for (var i = 0; i < 9; i++) {
+      list.add(Frame.fromIndex(i));
+    }
+
+    return list;
+  }
 }

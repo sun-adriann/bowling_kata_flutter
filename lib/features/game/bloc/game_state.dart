@@ -1,5 +1,7 @@
 part of 'game_bloc.dart';
 
+enum GameActivity { idle, loading }
+
 @freezed
 class GameState with _$GameState {
   const factory GameState({
@@ -8,8 +10,8 @@ class GameState with _$GameState {
     required List<Frame> frames,
     @Default(0) int currentFrameIndex,
     @Default(0) int currentRollIndex,
+    @Default(GameActivity.loading) GameActivity activity,
   }) = _GameState;
 
-  factory GameState.initial() =>
-      _GameState(frames: List.generate(10, (_) => Frame.empty()));
+  factory GameState.initial() => _GameState(frames: Frame.generateList());
 }
